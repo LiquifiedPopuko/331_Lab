@@ -5,10 +5,10 @@ import { RouterLink, RouterView } from 'vue-router'
 <template>
   <header>
     <nav>
-      <RouterLink to="{name: 'EventList'}">Home</RouterLink> |
-      <RouterLink to="{name: 'about'}">About</RouterLink> |
-      <RouterLink to="{name: 'category'}">Category</RouterLink> |
-      <RouterLink to="{name: 'student'}">Student List</RouterLink>
+      <RouterLink :to="{name: 'EventList'}">Home</RouterLink> |
+      <RouterLink :to="{name: 'about'}">About</RouterLink> |
+      <RouterLink :to="{name: 'category'}">Category</RouterLink> |
+      <RouterLink :to="{name: 'student'}">Student List</RouterLink>
     </nav>
   </header>
 
