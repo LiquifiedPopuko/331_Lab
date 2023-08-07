@@ -4,7 +4,6 @@ import EventService from '@/services/EventService'
 import { ref, type Ref, watchEffect, computed } from 'vue'
 import type { EventItem } from '@/type';
 import type { AxiosResponse } from 'axios';
-import { METHODS } from 'http';
 const totalEvent = ref<number>(0)
 const selectSize = ref<number>(0)
 const events: Ref<Array<EventItem>> = ref([])
