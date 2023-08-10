@@ -26,10 +26,10 @@ const router = useRouter()
         <h1>{{ event?.title }}</h1>
         <RouterLink :to="{name: 'event-detail', params: { id }}">
         Details            
-        </RouterLink>
+        </RouterLink>|
         <RouterLink :to="{name: 'event-register', params: { id }}">
         Register         
-        </RouterLink>
+        </RouterLink>|
         <RouterLink :to="{name: 'event-edit', params: { id }}">
         Edit          
         </RouterLink>
