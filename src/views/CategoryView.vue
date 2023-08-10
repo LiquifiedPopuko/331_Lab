@@ -41,16 +41,7 @@ const events = ref<EventItem[]>([
 
 <template>
   <h1>Events For Good</h1>
-  <main class="events">
+  <main class="flex flex-col items-end">
   <CategoriesCard v-for="event in events" :key="event.id" :event="event"></CategoriesCard>
   </main>
 </template>
-
-<style scoped>
-.events {
-  display: flex;
-  flex-direction: column;
-  align-items: right;
-}
-
-</style>

@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import EventCard from '../components/EventCard.vue'
 import EventService from '@/services/EventService'
-import NProgress from 'nprogress'
 import { useRouter, onBeforeRouteUpdate } from 'vue-router'
-import { ref, type Ref, watchEffect, computed } from 'vue'
+import { ref, type Ref, computed } from 'vue'
 import type { EventItem } from '@/type'
 import type { AxiosResponse } from 'axios'
 const totalEvent = ref<number>(0)
@@ -48,7 +47,7 @@ const hasNextPage = computed(() => {
 
 <template>
   <h1>Events For Good</h1>
-  <main class="events">
+  <main class="flex flex-col items-center">
     <EventCard v-for="event in events" :key="event.id" :event="event"></EventCard>
     <div class="pagination">
       <RouterLink
@@ -78,12 +77,6 @@ const hasNextPage = computed(() => {
 </template>
 
 <style scoped>
-.events {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 .pagination {
   display: flex;
   width: 290px;
