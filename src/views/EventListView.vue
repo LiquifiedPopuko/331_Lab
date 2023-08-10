@@ -1,12 +1,15 @@
 <script setup lang="ts">
 import EventCard from '../components/EventCard.vue'
 import EventService from '@/services/EventService'
+import NProgress from 'nprogress'
+import { useRouter, onBeforeRouteUpdate } from 'vue-router'
 import { ref, type Ref, watchEffect, computed } from 'vue'
-import type { EventItem } from '@/type';
-import type { AxiosResponse } from 'axios';
+import type { EventItem } from '@/type'
+import type { AxiosResponse } from 'axios'
 const totalEvent = ref<number>(0)
 const selectSize = ref<number>(0)
 const events: Ref<Array<EventItem>> = ref([])
+const router = useRouter()
 const props = defineProps({
   size: {
     type: Number,
@@ -17,14 +20,28 @@ const props = defineProps({
     required: true
   }
 })
-watchEffect (() => {
-  EventService.getEvent(selectSize.value, props.page).then((response: AxiosResponse<EventItem[]>) => {
+EventService.getEvent(3, props.page)
+  .then((response: AxiosResponse<EventItem[]>) => {
     events.value = response.data
     totalEvent.value = response.headers['x-total-count']
   })
+  .catch(() => {
+    router.push({ name: 'NetworkError' })
+  })
+onBeforeRouteUpdate((to, from, next) => {
+  const toPage = Number(to.query.page)
+  EventService.getEvent(3, toPage)
+    .then((response: AxiosResponse<EventItem[]>) => {
+      events.value = response.data
+      totalEvent.value = response.headers['x-total-count']
+      next()
+    })
+    .catch(() => {
+      next({ name: 'NetworkError' })
+    })
 })
 const hasNextPage = computed(() => {
-  const totalPages = Math.ceil(totalEvent.value/selectSize.value)
+  const totalPages = Math.ceil(totalEvent.value / 3)// selectsize.value
   return props.page.valueOf() < totalPages
 })
 </script>
@@ -34,8 +51,20 @@ const hasNextPage = computed(() => {
   <main class="events">
     <EventCard v-for="event in events" :key="event.id" :event="event"></EventCard>
     <div class="pagination">
-      <RouterLink :to="{name: 'EventList', query: {page: page - 1, size: selectSize}}" rel="prev" v-if="page != 1" id="page-prev">Prev Page</RouterLink>
-      <RouterLink :to="{name: 'EventList', query: {page: page + 1, size: selectSize}}" rel="next" v-if="hasNextPage" id="page-next">Next Page</RouterLink>
+      <RouterLink
+        :to="{ name: 'EventList', query: { page: page - 1, size: selectSize } }"
+        rel="prev"
+        v-if="page != 1"
+        id="page-prev"
+        >Prev Page</RouterLink
+      >
+      <RouterLink
+        :to="{ name: 'EventList', query: { page: page + 1, size: selectSize } }"
+        rel="next"
+        v-if="hasNextPage"
+        id="page-next"
+        >Next Page</RouterLink
+      >
     </div>
     <select name="selectSize" v-model="selectSize">
       <option value="1">1</option>
@@ -45,7 +74,7 @@ const hasNextPage = computed(() => {
       <option value="5">5</option>
       <option value="6">6</option>
     </select>
-    </main>
+  </main>
 </template>
 
 <style scoped>
