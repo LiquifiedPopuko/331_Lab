@@ -11,7 +11,7 @@ import { RouterLink, RouterView } from 'vue-router'
     <!-- <div id="flashMessage" v-if="message">
       <h4>{{ message }}</h4>
     </div> -->
-    <nav class="p-8">
+    <nav class="p-8 font-bold text-slate-800 router-link-exact-active:text-green-600">
       <RouterLink :to="{name: 'EventList'}">Home</RouterLink> |
       <RouterLink :to="{name: 'about'}">About</RouterLink> |
       <RouterLink :to="{name: 'category'}">Category</RouterLink> |
