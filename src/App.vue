@@ -8,6 +8,7 @@ import { RouterLink, RouterView } from 'vue-router'
 
 <template>
   <header class="max-h-screen leading-normal">
+    <h3>Thaipat Sukhumpraisan</h3>
     <!-- <div id="flashMessage" v-if="message">
       <h4>{{ message }}</h4>
     </div> -->
